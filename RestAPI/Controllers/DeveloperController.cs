@@ -5,7 +5,7 @@ using RestAPI.Services;
 
 namespace RestAPI.Controllers
 {
- 
+    [Route("/api/[controller]")]
     public class DeveloperController : ControllerBase
     {
         protected readonly IDeveloperService _developerService;
@@ -18,12 +18,11 @@ namespace RestAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAllDevelopers()
         {
-            var developers = _developerService.GetAllDevelopers();
+            var developers = await _developerService.GetAllDevelopers();
             return Ok(developers);
         }
 
-        [Route("[action]")]
-        [HttpGet]
+        [HttpGet("Id/{Id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetDeveloperById(int Id)
         {
@@ -31,8 +30,7 @@ namespace RestAPI.Controllers
             return Ok(developer);
         }
 
-        [Route("[action]")]
-        [HttpGet]
+        [HttpGet("Email/{Email}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetDeveloperByEmail(string Email)
         {
@@ -74,8 +72,5 @@ namespace RestAPI.Controllers
             _developerService.DeleteDeveloper(Id);
             return Ok();
         }
-
-
-
     }
 }

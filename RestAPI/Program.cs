@@ -1,3 +1,4 @@
+using RestAPI.Dapper;
 using RestAPI.Services;
 
 
@@ -9,6 +10,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddTransient<IDeveloperRepository, DeveloperRepository>();
+builder.Services.AddTransient<IDeveloperService, DeveloperService>();
 
 var app = builder.Build();
 

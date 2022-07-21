@@ -66,7 +66,8 @@ namespace RestAPI.Dapper
                 {
                     dbConnection.Open();
                     string query = @"SELECT Id, DeveloperName, Email, GithubURL, Department, JoinedDate FROM Developers";
-                    return await dbConnection.QueryAsync<Developer>(query);
+                    var developers = await dbConnection.QueryAsync<Developer>(query);
+                    return developers;
                 }
             }
             catch (Exception ex)
@@ -81,8 +82,12 @@ namespace RestAPI.Dapper
             {
                 using (IDbConnection dbConnection = Connection)
                 {
+                    if (!string.IsNullOrEmpty(Email))
+                    {
+                        Email = Email.Trim().ToUpper();
+                    }
                     dbConnection.Open();
-                    string query = @"SELECT * FROM Developers WHERE Email = @Email";
+                    string query = @"SELECT * FROM Developers WHERE Upper(Email) = @Email";
                     return await dbConnection.QueryFirstOrDefaultAsync<Developer>(query, new {Email = Email});
                 }
             }
