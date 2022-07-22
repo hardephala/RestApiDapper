@@ -121,8 +121,8 @@ namespace RestAPI.Dapper
                 using (IDbConnection dbConnection = Connection)
                 {
                     dbConnection.Open();
-                    string query = @"UPDATE Developers SET DeveloperName = @DeveloperName, Email = @Email, GithubURL = @GithubURL, Department = @Department, JoinedDate = @JoinedDate";
-                    dbConnection.Execute(query, developer);
+                    string query = @"UPDATE Developers SET DeveloperName = @DeveloperName, Email = @Email, GithubURL = @GithubURL, Department = @Department WHERE Id = @Id ";
+                    dbConnection.Execute(query, new { Id = developer.Id, DeveloperName = developer.DeveloperName, Email = developer.Email, GithubURL = developer.GithubURL, Department = developer.Department });
                 }
             }
             catch (Exception ex)
